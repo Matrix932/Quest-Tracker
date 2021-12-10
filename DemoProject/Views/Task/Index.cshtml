@@ -1,0 +1,67 @@
+﻿@model IEnumerable<DemoProject.Models.Task>
+
+@{
+    ViewData["Title"] = "Index";
+    string color="";
+}
+
+<h1>List of task of the project @DemoProject.Controllers.TaskController.project.Name </h1>
+
+<p>
+    <a asp-action="Create" asp-route-id="" >Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Priority)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+             
+         @if (item.Status.Equals("To do"))
+        {
+            color = "white";
+        }
+        else if (item.Status == "Done")
+        { color = "green"; }
+        else{ color = "yellow"; }
+
+
+        
+
+            <tr style="background-color:@color;">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                <a class="btn btn-light" asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-danger"asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a class="btn btn btn-info btn-sm" asp-action="Index" asp-controller="Project">Back to project list</a>
